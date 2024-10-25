@@ -1,0 +1,105 @@
+body {
+    background: linear-gradient(135deg, #f0f0f0, #d9d9d9);
+    perspective: 1000px;
+    animation: backgroundMove 10s linear infinite; /* Continuous moving background */
+}
+
+@keyframes backgroundMove {
+    0% {
+        background-position: 0% 0%;
+    }
+    100% {
+        background-position: 100% 100%;
+    }
+}
+
+.dashboard-container {
+    max-width: 600px; /* Adjusted for a wider dashboard */
+    margin: 100px auto;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(126, 123, 123, 0.1);
+    background-color: rgba(255, 255, 255, 0.9);
+    text-align: center;
+    position: relative;
+    z-index: 1;
+}
+
+.dashboard-title {
+    font-size: 3rem;
+    margin-bottom: 20px;
+    color: var(--eerie-black-1);
+}
+
+.dashboard-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.dashboard-input {
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid var(--quick-silver);
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+.dashboard-button {
+    padding: 10px;
+    background-color: var(--selective-yellow);
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    color: #ffffff;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.dashboard-button:hover {
+    background-color: var(--radical-red);
+}
+
+.error-message {
+    color: rgb(255, 0, 0);
+    margin-bottom: 10px;
+}
+
+.user-type-container {
+    margin-top: 20px;
+    text-align: center;
+    display: flex; /* Use flexbox for horizontal alignment */
+    justify-content: center; /* Center the buttons */
+    gap: 10px; /* Space between buttons */
+}
+
+.user-type-button {
+    padding: 10px 20px;
+    margin: 5px;
+    border: none;
+    border-radius: 5px;
+    background-color: var(--selective-yellow);
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease; /* Add transition for 3D effect */
+    transform: perspective(1000px) translateZ(0); /* Initial 3D effect */
+}
+
+.user-type-button:hover {
+    background-color: var(--radical-red);
+    transform: perspective(1000px) translateZ(10px); /* 3D effect on hover */
+}
+
+/* 3D Background Effect */
+.dashboard-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    transform: translateZ(-1px) scale(1.1);
+    z-index: -1;
+    box-shadow: 0 10px 30px rgba(39, 67, 143, 0.2);
+}
