@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate for redirection
 import './TeacherDashboard.css';
 
@@ -20,6 +20,18 @@ const Signup = () => {
     });
     const [error, setError] = useState('');
     const [role, setRole] = useState(''); // State to hold the selected role
+    const [captchaValue, setCaptchaValue] = useState(''); // User input for CAPTCHA
+    const [generatedCaptcha, setGeneratedCaptcha] = useState(''); // Generated CAPTCHA
+
+    // Function to generate random numbers
+    const generateCaptcha = () => {
+        const randomNum = Math.floor(1000 + Math.random() * 9000); // Generate a random 4-digit number
+        setGeneratedCaptcha(randomNum.toString());
+    };
+
+    useEffect(() => {
+        generateCaptcha(); // Generate CAPTCHA on component mount
+    }, []);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -36,9 +48,14 @@ const Signup = () => {
             setError('Password must be at least 6 characters long');
             return;
         }
+        if (captchaValue !== generatedCaptcha) {
+            setError('CAPTCHA does not match');
+            return;
+        }
         // Handle signup logic here
         console.log('Registering:', formData);
         setError('');
+        // You can also send the captchaValue to your server for verification
     };
 
     const validateEmail = (email) => {
@@ -77,6 +94,22 @@ const Signup = () => {
                 <input type="text" name="state" className="dashboard-input" placeholder="State" onChange={handleChange} required />
                 <input type="text" name="zipCode" className="dashboard-input" placeholder="Zip Code" onChange={handleChange} required />
                 <input type="text" name="country" className="dashboard-input" placeholder="Country" onChange={handleChange} required />
+                
+                {/* Custom CAPTCHA */}
+                <div className="captcha-container">
+                    <div className="captcha-display" style={{ filter: 'blur(3px)', fontSize: '24px', fontWeight: 'bold' }}>
+                        {generatedCaptcha}
+                    </div>
+                    <input
+                        type="text"
+                        className="dashboard-input"
+                        placeholder="Enter the CAPTCHA"
+                        value={captchaValue}
+                        onChange={(e) => setCaptchaValue(e.target.value)}
+                        required
+                    />
+                </div>
+
                 <button type="submit" className="dashboard-button">Register</button>
             </form>
             <div className="user-type-container"> {/* Added container for role selection */}
